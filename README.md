@@ -6,6 +6,7 @@
     {maven repository}https://mvnrepository.com/
     {bootstrap}https://getbootstrap.com/
     {flyway}https://flywaydb.org/
+    {lombok}https://projectlombok.org/
 ## 工具
     github
     git

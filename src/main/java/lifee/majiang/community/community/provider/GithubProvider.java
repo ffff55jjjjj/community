@@ -6,6 +6,7 @@ import lifee.majiang.community.community.dto.GithubUser;
 import okhttp3.*;
 import org.springframework.stereotype.Component;
 
+import javax.print.attribute.standard.MediaSize;
 import java.io.IOException;
 
 @Component
@@ -41,6 +42,7 @@ public class GithubProvider {
             GithubUser githubUser = JSON.parseObject(string, GithubUser.class);
             return githubUser;
         } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
         return null;
     }
