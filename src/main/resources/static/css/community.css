@@ -11,3 +11,14 @@ body{
     float:right;
     margin-bottom: 15px;
 }
+
+.avartar{
+    height: 68px;
+    width: 68px;
+}
+
+.text-color-999{
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
+}
