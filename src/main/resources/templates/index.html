@@ -38,6 +38,7 @@
                         <li><a href="#">退出登录</a></li>
                     </ul>
                 </li>
+                <li th:if="${session.user == null}"><a href="/autoLogin">一键登录</a></li>
                 <li th:if="${session.user == null}"><a href="https://github.com/login/oauth/authorize?client_id=9018feb55710e47730f1&redirect_uri=http://localhost:8887/callback&scope=user&state=1">登录</a></li>
             </ul>
         </div>
@@ -57,7 +58,7 @@
                 <div class="media-body">
                     <h3 class="media-heading" th:text="${question.title}"></h3>
                     <span th:text="${question.description}"></span><br>
-                    <span class="text-color-999"> <span th:text="${question.commentCount}"></span> 个回复 • <span th:text="${question.viewCount}"></span> 次浏览 • <span th:text="${#dates.format(question.gmtCreate,'dd MMMM yyyy')}"></span> </span>
+                    <span class="text-color-999"> <span th:text="${question.commentCount}"></span> 个回复 • <span th:text="${question.viewCount}"></span> 次浏览 • <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span> </span>
                 </div>
             </div>
             <hr>
