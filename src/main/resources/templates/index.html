@@ -61,12 +61,30 @@
                     <span class="text-color-999"> <span th:text="${question.commentCount}"></span> 个回复 • <span th:text="${question.viewCount}"></span> 次浏览 • <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span> </span>
                 </div>
             </div>
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li>
+                        <a th:href="@{/(pageCount=1)}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li th:each="count:${pagecount.totalPageCount}" th:class="${count == pagecount.currentPageCount}?'active':'disabled'">
+                        <a th:href="@{/(pageCount=${count})}" th:text="${count}">
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/(pageCount=${pagecount.lastPage})}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
             <hr>
             <br>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <h3>热门话题</h3>
-
+            等待输入…………
         </div>
     </div>
 </div>

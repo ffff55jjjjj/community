@@ -20,8 +20,9 @@ public class QuestionService {
     @Autowired
     QuestionMapper questionMapper;
 
-    public List<QuestionDTO> List() {
-        List<Question> questions = questionMapper.List();
+    public List<QuestionDTO> List(Integer pageCount, Integer PAGE_SIZES) {
+        int offset = PAGE_SIZES*(pageCount-1);
+        List<Question> questions = questionMapper.List(offset,PAGE_SIZES);
         List<QuestionDTO> questionDTOList = new ArrayList<>();
         for (Question question : questions) {
             User user = userMapper.findById(question.getCreator());
@@ -31,5 +32,9 @@ public class QuestionService {
             questionDTOList.add(questionDTO);
         }
         return questionDTOList;
+    }
+
+    public Integer getPageCount() {
+        return questionMapper.getPageCount();
     }
 }
