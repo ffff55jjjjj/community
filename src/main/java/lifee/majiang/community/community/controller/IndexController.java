@@ -46,7 +46,7 @@ public class IndexController {
         }
         PageUtility pageUtility = new PageUtility();
         pageUtility.setCurrentPageCount(pageCount);
-        pageUtility.setToltalPageCount((int)Math.ceil(questionService.getPageCount()*1.0f/5));
+        pageUtility.setToltalPageCount((int)Math.ceil(questionService.getPageCount()*1.0f/PAGE_SIZES));
         model.addAttribute("pagecount", pageUtility);
         List<QuestionDTO> questionDTOList = questionService.List(pageCount,PAGE_SIZES);
         model.addAttribute("questions",questionDTOList);

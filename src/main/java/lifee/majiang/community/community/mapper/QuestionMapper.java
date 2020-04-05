@@ -18,4 +18,10 @@ public interface QuestionMapper {
 
     @Select("SELECT COUNT(*) FROM QUESTION")
     Integer getPageCount();
+
+    @Select("SELECT COUNT(*) FROM QUESTION WHERE CREATOR = #{userId}")
+    Integer getPageCountByUserId(@Param("userId") Integer userId);
+
+    @Select("SELECT * FROM QUESTION WHERE CREATOR = #{userId} LIMIT #{offerset},#{sizes}")
+    List<Question> ListUserId(@Param("userId") Integer userId,@Param("offerset") int offset,@Param("sizes") Integer page_sizes);
 }
