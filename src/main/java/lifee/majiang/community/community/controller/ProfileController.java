@@ -2,7 +2,6 @@ package lifee.majiang.community.community.controller;
 
 import lifee.majiang.community.community.dto.PageUtility;
 import lifee.majiang.community.community.dto.QuestionDTO;
-import lifee.majiang.community.community.mapper.UserMapper;
 import lifee.majiang.community.community.model.User;
 import lifee.majiang.community.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,16 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
 public class ProfileController {
     private final Integer PAGE_SIZES = 5;
-    @Autowired
-    UserMapper userMapper;
 
     @Autowired
     QuestionService questionService;
@@ -29,22 +24,10 @@ public class ProfileController {
     public String profile(HttpServletRequest request,
                           @PathVariable("action") String action, Model model,
                           @RequestParam(name="pageCount",required=false,defaultValue="1")Integer pageCount){
-        if(pageCount<1) pageCount=1;
-        Cookie[] cookies = request.getCookies();
-        User user = null;
-        if(cookies != null && cookies.length!=0)
-            for (Cookie cookie : cookies) {
-                if(cookie.getName().equals("token")){
-                    String token = cookie.getValue();
-                    user = userMapper.findByToken(token);
-                    if(user != null){
-                        request.getSession().setAttribute("user",user);
-                    }
-                    break;
-                }
-            }
+        User user = (User)request.getSession().getAttribute("user");
         if(user == null)return "redirect:/";
 
+        if(pageCount<1) pageCount=1;
         PageUtility pageUtility = new PageUtility();
         pageUtility.setCurrentPageCount(pageCount);
         pageUtility.setToltalPageCount((int)Math.ceil(questionService.getPageCountByUserId(user.getId())*1.0f/PAGE_SIZES));

@@ -1,7 +1,6 @@
 package lifee.majiang.community.community.controller;
 
 import lifee.majiang.community.community.mapper.QuestionMapper;
-import lifee.majiang.community.community.mapper.UserMapper;
 import lifee.majiang.community.community.model.Question;
 import lifee.majiang.community.community.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,22 +9,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public class PublicController {
+public class PublishController {
     @Autowired
     private QuestionMapper questionMapper;
 
-    @Autowired
-    private UserMapper userMapper;
-
     @GetMapping("/publish")
-   public String publish(){
-       return "publish";
+   public String publish(HttpServletRequest request){
+        User user = (User)request.getSession().getAttribute("user");
+        if(user == null){
+            return "redirect:/";
+        }
+        return "publish";
    }
 
    @PostMapping("/publish")
@@ -51,21 +49,7 @@ public class PublicController {
            return "publish";
        }
 
-
-       Cookie[] cookies = request.getCookies();
-       User user = null;
-       if(cookies!= null){
-           for (Cookie cookie : cookies) {
-               if(cookie.getName().equals("token")){
-                   String token = cookie.getValue();
-                   user = userMapper.findByToken(token);
-                   if(user != null){
-                       request.getSession().setAttribute("user",user);
-                   }
-                   break;
-               }
-           }
-       }
+       User user = (User)request.getSession().getAttribute("user");
        if(user == null){
            model.addAttribute("error","请先登录，再发布！");
            return "publish";
