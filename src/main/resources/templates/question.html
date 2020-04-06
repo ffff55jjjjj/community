@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${question.title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/community.css">
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.js" type="application/javascript"></script>
+    <script src="/js/npm.js" type="application/javascript"></script>
+</head>
+<body>
+<div th:insert="~{navigation::nav}"></div>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 normal_border">
+            <h2  th:text="${question.title}"></h2>
+            <span class="text-color-999">
+                作者: <span th:text="${question.user.name}"></span>
+                • <span th:text="${question.commentCount}"></span>
+                个回复 • <span th:text="${question.viewCount}"></span>
+                次浏览 • <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
+            </span>
+            <hr>
+            <div class="description_block normal_border" >
+                <span  th:text="${question.description}"></span>
+            </div>
+            <span class="text-color-999">
+                <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>|
+                <span>添加评论</span>|
+                <span>邀请</span>|
+                <span>编辑</span>
+            </span>
+            <hr>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"  th:if="${session.user != null}">
+                <label for="description">请添加您的评论</label>
+                <textarea class="form-control" name="description" id="description" cols="30" rows="10" th:value="${description}" > </textarea>
+                <div class="container-fluid main">
+                    <div class="row">
+                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12"><span th:if="${error}" class="alert alert-danger" th:text="${error}"></span></div>
+                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12"><button type="submit" class="btn btn-success btn-publish" >评论</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"  th:if="${session.user == null}">
+                要评论文章请先登录或注册
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h3>发起人</h3>
+                <div class="creator">
+                    <div class="media-left">
+                        <img class="media-object img-rounded question_avatar"  th:src="${question.user.avatarUrl}">
+                    </div>
+                    <span th:text="${question.user.name}"></span>
+                </div>
+            <hr>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h3>相关问题</h3>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

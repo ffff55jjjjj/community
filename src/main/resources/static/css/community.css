@@ -23,6 +23,28 @@ body{
     color: #999;
 }
 
+
 .profile_list{
     margin-top:15px;
+}
+
+.description_block{
+    height: 400px;
+    overflow: auto;
+    padding: 20px;
+}
+
+.question_avatar{
+    width: 32px;
+    height: 32px;
+}
+
+.creator{
+    padding-left: 10px;
+}
+
+.normal_border{
+    border-style: solid;
+    border-width: 1px;
+    border-color: #f8f8f8;
 }
