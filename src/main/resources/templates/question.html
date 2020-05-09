@@ -28,9 +28,13 @@
             </div>
             <span class="text-color-999">
                 <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>|
-                <span>添加评论</span>|
+                <a th:href="@{'/reply/'+${question.id}}">
+                    <span>添加评论</span>|
+                </a>
                 <span>邀请</span>|
-                <span>编辑</span>
+                <a th:href="@{'/publish/'+${question.id}}" th:if="${session.user !=null && session.user.id == question.creator}">
+                    <span>编辑</span>|
+                </a>
             </span>
             <hr>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"  th:if="${session.user != null}">
