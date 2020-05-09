@@ -28,7 +28,7 @@
             </div>
             <span class="text-color-999">
                 <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>|
-                <a th:href="@{'/reply/'+${question.id}}">
+                <a href="#description">
                     <span>添加评论</span>|
                 </a>
                 <span>邀请</span>|
@@ -38,14 +38,17 @@
             </span>
             <hr>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"  th:if="${session.user != null}">
-                <label for="description">请添加您的评论</label>
-                <textarea class="form-control" name="description" id="description" cols="30" rows="10" th:value="${description}" > </textarea>
-                <div class="container-fluid main">
-                    <div class="row">
-                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12"><span th:if="${error}" class="alert alert-danger" th:text="${error}"></span></div>
-                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12"><button type="submit" class="btn btn-success btn-publish" >评论</button></div>
+                <form action="/reply">
+                    <label for="description">请添加您的评论</label>
+                    <input type="hidden" name="questionId" th:value="${question.id}">
+                    <textarea class="form-control" name="description" id="description" cols="30" rows="10" th:value="${description}" > </textarea>
+                    <div class="container-fluid main">
+                        <div class="row">
+                            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12"><span th:if="${error}" class="alert alert-danger" th:text="${error}"></span></div>
+                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12"><button type="submit" class="btn btn-success btn-publish" >评论</button></div>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"  th:if="${session.user == null}">
                 要评论文章请先登录或注册

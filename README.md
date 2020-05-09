@@ -13,3 +13,6 @@
     git
     IntelliJ IDEA
     bootstrap
+    
+##指令
+    mvn flyway:migrate

@@ -55,42 +55,46 @@ public class PublishController {
            @RequestParam("id") Integer id,
            HttpServletRequest request,
            Model model){
-       model.addAttribute("title",title);
-       model.addAttribute("description",description);
-       model.addAttribute("tag",tag);
-       model.addAttribute("id",-1);
-        if(title == null || title == "" ){
-            model.addAttribute("error","标题不能为空！");
-            return "publish";
+        try{
+           model.addAttribute("title",title);
+           model.addAttribute("description",description);
+           model.addAttribute("tag",tag);
+           model.addAttribute("id",-1);
+            if(title == null || title == "" ){
+                model.addAttribute("error","标题不能为空！");
+                return "publish";
+            }
+           if(description == null || description == "" ){
+               model.addAttribute("error","问题补充不能为空！");
+               return "publish";
+           }
+           if(tag == null || tag == "" ){
+               model.addAttribute("error","标签不能为空！");
+               return "publish";
+           }
+
+           User user = (User)request.getSession().getAttribute("user");
+           if(user == null){
+               model.addAttribute("error","请先登录，再发布！");
+               return "publish";
+           }
+           Question question = new Question();
+           question.setTitle(title);
+           question.setDescription(description);
+           question.setTag(tag);
+           question.setCreator(user.getId());
+           question.setGmtCreate(System.currentTimeMillis());
+           question.setGmtModified(question.getGmtCreate());
+           if(id != null){
+               question.setId(id);
+               questionMapper.update(question);
+           }else{
+               questionMapper.create(question);
+           }
+
+           return "redirect:/";
+        }catch (Exception e){
+            return "404";
         }
-       if(description == null || description == "" ){
-           model.addAttribute("error","问题补充不能为空！");
-           return "publish";
-       }
-       if(tag == null || tag == "" ){
-           model.addAttribute("error","标签不能为空！");
-           return "publish";
-       }
-
-       User user = (User)request.getSession().getAttribute("user");
-       if(user == null){
-           model.addAttribute("error","请先登录，再发布！");
-           return "publish";
-       }
-       Question question = new Question();
-       question.setTitle(title);
-       question.setDescription(description);
-       question.setTag(tag);
-       question.setCreator(user.getId());
-       question.setGmtCreate(System.currentTimeMillis());
-       question.setGmtModified(question.getGmtCreate());
-       if(id != null){
-           question.setId(id);
-           questionMapper.update(question);
-       }else{
-           questionMapper.create(question);
-       }
-
-       return "redirect:/";
    }
 }

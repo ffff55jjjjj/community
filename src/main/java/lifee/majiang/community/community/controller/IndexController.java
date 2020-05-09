@@ -23,13 +23,17 @@ public class IndexController {
     public String index(HttpServletRequest request,
                         Model model,
                         @RequestParam(name="pageCount",required=false,defaultValue="1")Integer pageCount){
-        if(pageCount<1) pageCount=1;
-        PageUtility pageUtility = new PageUtility();
-        pageUtility.setCurrentPageCount(pageCount);
-        pageUtility.setToltalPageCount((int)Math.ceil(questionService.getPageCount()*1.0f/PAGE_SIZES));
-        model.addAttribute("pagecount", pageUtility);
-        List<QuestionDTO> questionDTOList = questionService.List(pageCount,PAGE_SIZES);
-        model.addAttribute("questions",questionDTOList);
-        return "index";
+        try {
+            if(pageCount<1) pageCount=1;
+            PageUtility pageUtility = new PageUtility();
+            pageUtility.setCurrentPageCount(pageCount);
+            pageUtility.setToltalPageCount((int)Math.ceil(questionService.getPageCount()*1.0f/PAGE_SIZES));
+            model.addAttribute("pagecount", pageUtility);
+            List<QuestionDTO> questionDTOList = questionService.List(pageCount,PAGE_SIZES);
+            model.addAttribute("questions",questionDTOList);
+            return "index";
+        }catch (Exception e){
+            return "404";
+        }
     }
 }

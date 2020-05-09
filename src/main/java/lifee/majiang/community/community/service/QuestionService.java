@@ -65,4 +65,7 @@ public class QuestionService {
         return questionDTO;
     }
 
+    public void addViewCount(Integer id) {
+        questionMapper.addViewCount(id);
+    }
 }

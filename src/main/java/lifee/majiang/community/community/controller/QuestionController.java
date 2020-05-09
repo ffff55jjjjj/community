@@ -17,8 +17,14 @@ public class QuestionController {
     @GetMapping("/question/{action}")
     public String question(@PathVariable("action")Integer id,
                            Model model) {
-        QuestionDTO questionDTO = questionService.getQuestionById(id);
-        model.addAttribute("question",questionDTO);
-        return "question";
+        try{
+            questionService.addViewCount(id);
+            QuestionDTO questionDTO = questionService.getQuestionById(id);
+            System.out.println(questionDTO.getViewCount());
+            model.addAttribute("question",questionDTO);
+            return "question";
+        }catch (Exception e){
+            return "404";
+        }
     }
 }
